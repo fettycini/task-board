@@ -1,0 +1,291 @@
+/* Vertical budget for the official 7" panel (800x480):
+     topbar   56px
+     stage    fills (≈368px)
+     tabbar   56px
+   Nothing outside .scroll regions is allowed to overflow. */
+
+.app {
+  display: grid;
+  grid-template-rows: 56px minmax(0, 1fr) 56px;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------- topbar */
+
+.topbar {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px auto;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  z-index: 5;
+}
+
+.topbar-title {
+  min-width: 0;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.topbar-title h1 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.week-label {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.week-label .this-week {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 4px;
+}
+
+/* ------------------------------------------------------------------ stage */
+
+.stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.view[hidden] { display: none; }
+
+/* --------------------------------------------------- tasks: person columns */
+
+.columns {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  min-height: 0;
+  flex: 1;
+  grid-auto-rows: minmax(0, 1fr);
+}
+.columns[data-count="1"] { grid-template-columns: minmax(0, 1fr); }
+.columns[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.columns[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.columns[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.columns[data-count="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.columns[data-count="6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.columns[data-count="7"] { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+
+/* Past four columns each one is under ~155px, so shed padding and drop the
+   type a step rather than letting titles clip. */
+.columns[data-count="5"],
+.columns[data-count="6"],
+.columns[data-count="7"] {
+  gap: 5px;
+  padding: 6px;
+}
+.columns[data-count="5"] .column-head,
+.columns[data-count="6"] .column-head,
+.columns[data-count="7"] .column-head { padding: 5px 6px; gap: 4px; }
+
+.columns[data-count="5"] .column-avatar,
+.columns[data-count="6"] .column-avatar,
+.columns[data-count="7"] .column-avatar { width: 21px; height: 21px; font-size: 12px; }
+
+.columns[data-count="5"] .column-name,
+.columns[data-count="6"] .column-name,
+.columns[data-count="7"] .column-name { font-size: 11.5px; }
+
+.columns[data-count="5"] .column-count,
+.columns[data-count="6"] .column-count,
+.columns[data-count="7"] .column-count { display: none; }
+
+.columns[data-count="5"] .task,
+.columns[data-count="6"] .task,
+.columns[data-count="7"] .task { padding: 4px 5px; gap: 5px; min-height: 38px; }
+
+.columns[data-count="5"] .task .check,
+.columns[data-count="6"] .task .check,
+.columns[data-count="7"] .task .check { width: 22px; height: 22px; font-size: 13px; }
+
+.columns[data-count="5"] .task .task-title,
+.columns[data-count="6"] .task .task-title,
+.columns[data-count="7"] .task .task-title { font-size: 11.5px; }
+
+.columns[data-count="5"] .task .task-meta,
+.columns[data-count="6"] .task .task-meta,
+.columns[data-count="7"] .task .task-meta { font-size: 9.5px; }
+
+.columns[data-count="6"] .task .task-icon,
+.columns[data-count="7"] .task .task-icon { display: none; }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.column-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--person, var(--accent)) 16%, var(--surface)),
+    var(--surface)
+  );
+}
+
+.column-avatar {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--person, var(--accent)) 26%, var(--surface));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--person, var(--accent)) 55%, transparent);
+}
+
+.column-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.column-count {
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: var(--bg-tint);
+  border-radius: 99px;
+  padding: 2px 7px;
+}
+
+.column-list {
+  flex: 1;
+  min-height: 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* ------------------------------------------------------------ single lists */
+
+.list-pane {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pane-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px 0;
+}
+.pane-header h2 {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------------- tabbar */
+
+.tabbar {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -2px 8px rgba(90, 60, 80, 0.06);
+  z-index: 5;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: var(--bg-tint);
+}
+.tab .tab-icon { font-size: 16px; line-height: 1; }
+.tab[aria-selected="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+  box-shadow: var(--shadow-soft);
+}
+.tab .tab-badge {
+  min-width: 18px;
+  padding: 0 5px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--accent);
+}
+.tab[aria-selected="true"] .tab-badge { background: var(--accent-ink); }
+
+/* The add button sits in the tab bar so it is reachable from any view. */
+.tab-add {
+  flex: none;
+  width: 62px;
+  background: var(--done);
+  color: #fff;
+  font-size: 22px;
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ----------------------------------------------- when the keyboard is open */
+
+body.kb-open .app { grid-template-rows: 56px minmax(0, 1fr) 0; }
+body.kb-open .tabbar { display: none; }

@@ -1,0 +1,130 @@
+/* Four themes, switched by [data-theme] on <html>. Each defines the same
+   token set so nothing downstream needs to know which one is active. */
+
+:root {
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --shadow-soft: 0 2px 6px rgba(90, 60, 80, 0.07);
+  --shadow-card: 0 4px 14px rgba(90, 60, 80, 0.10);
+  --shadow-lift: 0 10px 30px rgba(70, 45, 65, 0.22);
+
+  /* Person accent colours, shared across themes. */
+  --person-blue: #6aa9e9;
+  --person-pink: #f288b4;
+  --person-mint: #6fcfae;
+  --person-peach: #f6a97a;
+  --person-lilac: #a894e8;
+  --person-lemon: #efc75e;
+}
+
+/* ---------------------------------------------------------------- sakura */
+[data-theme="sakura"] {
+  --bg: #fff5f7;
+  --bg-tint: #ffe9ef;
+  --surface: #ffffff;
+  --surface-2: #fff8fa;
+  --ink: #59404c;
+  --ink-soft: #96808c;
+  --ink-faint: #bfaeb7;
+  --line: #f6dde5;
+  --line-strong: #eec3d2;
+  --accent: #f47ba7;
+  --accent-ink: #ffffff;
+  --accent-soft: #ffe2ec;
+  --done: #7ecfa8;
+  --done-soft: #e2f6ec;
+  --warn: #f0a35e;
+  --focus: #f47ba7;
+  --kb-bg: #fbe4ec;
+}
+
+/* ------------------------------------------------------------------ mint */
+[data-theme="mint"] {
+  --bg: #f2fbf7;
+  --bg-tint: #e2f5ec;
+  --surface: #ffffff;
+  --surface-2: #f7fdfa;
+  --ink: #38564b;
+  --ink-soft: #7a998d;
+  --ink-faint: #a9c3b8;
+  --line: #dcf0e6;
+  --line-strong: #b9ddcc;
+  --accent: #46c08d;
+  --accent-ink: #ffffff;
+  --accent-soft: #d9f4e7;
+  --done: #57b98e;
+  --done-soft: #ddf3e8;
+  --warn: #e8a95c;
+  --focus: #46c08d;
+  --kb-bg: #dcf1e7;
+}
+
+/* -------------------------------------------------------------- lavender */
+[data-theme="lavender"] {
+  --bg: #f7f4fe;
+  --bg-tint: #ece5fb;
+  --surface: #ffffff;
+  --surface-2: #faf8ff;
+  --ink: #4a4160;
+  --ink-soft: #8a80a6;
+  --ink-faint: #b6adcb;
+  --line: #e8e1f8;
+  --line-strong: #cfc2ee;
+  --accent: #9a7ce8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e9e1fd;
+  --done: #7ec9b4;
+  --done-soft: #dff3ee;
+  --warn: #eba76a;
+  --focus: #9a7ce8;
+  --kb-bg: #e9e2fa;
+}
+
+/* ------------------------------------------------------------------ night
+   For a bedroom or hallway — dim enough not to light the room at 2am. */
+[data-theme="night"] {
+  --bg: #191723;
+  --bg-tint: #211e2e;
+  --surface: #262232;
+  --surface-2: #2e2a3c;
+  --ink: #ece8f5;
+  --ink-soft: #a49dba;
+  --ink-faint: #726b88;
+  --line: #35304a;
+  --line-strong: #4a4363;
+  --accent: #f085b0;
+  --accent-ink: #211c2a;
+  --accent-soft: #3a2c3c;
+  --done: #63c79f;
+  --done-soft: #26382f;
+  --warn: #e5a45f;
+  --focus: #f085b0;
+  --kb-bg: #241f30;
+
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.32);
+  --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.38);
+  --shadow-lift: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* Optional accent override. Set [data-accent] on <html> to repaint the app's
+   highlight colour without leaving the chosen theme. */
+[data-accent="blue"]  { --accent: var(--person-blue);  --accent-soft: color-mix(in srgb, var(--person-blue) 20%, var(--surface));  --focus: var(--person-blue); }
+[data-accent="pink"]  { --accent: var(--person-pink);  --accent-soft: color-mix(in srgb, var(--person-pink) 20%, var(--surface));  --focus: var(--person-pink); }
+[data-accent="mint"]  { --accent: var(--person-mint);  --accent-soft: color-mix(in srgb, var(--person-mint) 20%, var(--surface));  --focus: var(--person-mint); }
+[data-accent="peach"] { --accent: var(--person-peach); --accent-soft: color-mix(in srgb, var(--person-peach) 20%, var(--surface)); --focus: var(--person-peach); }
+[data-accent="lilac"] { --accent: var(--person-lilac); --accent-soft: color-mix(in srgb, var(--person-lilac) 20%, var(--surface)); --focus: var(--person-lilac); }
+[data-accent="lemon"] { --accent: var(--person-lemon); --accent-soft: color-mix(in srgb, var(--person-lemon) 20%, var(--surface)); --focus: var(--person-lemon); }
+
+/* Accent overrides need readable text on top of the accent fill. */
+[data-accent="lemon"] { --accent-ink: #4a3d18; }
+[data-accent="mint"]  { --accent-ink: #16382b; }
+
+/* Person colour helpers, resolved from the person's `color` field. */
+[data-color="blue"]   { --person: var(--person-blue); }
+[data-color="pink"]   { --person: var(--person-pink); }
+[data-color="mint"]   { --person: var(--person-mint); }
+[data-color="peach"]  { --person: var(--person-peach); }
+[data-color="lilac"]  { --person: var(--person-lilac); }
+[data-color="lemon"]  { --person: var(--person-lemon); }
+[data-color="shared"] { --person: var(--ink-soft); }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sakura">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Our Week</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div id="app" class="app">
+
+  <header class="topbar">
+    <button class="icon-btn" id="prevWeek" aria-label="Previous week">‹</button>
+    <div class="topbar-title">
+      <h1 id="boardTitle">Our Week</h1>
+      <p id="weekLabel" class="week-label">—</p>
+    </div>
+    <button class="icon-btn" id="nextWeek" aria-label="Next week">›</button>
+    <div class="topbar-right">
+      <div class="progress" id="progress" title="Done this week">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="progress-track" cx="18" cy="18" r="15.5"></circle>
+          <circle class="progress-fill" id="progressFill" cx="18" cy="18" r="15.5"></circle>
+        </svg>
+        <span id="progressText">0/0</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="view" id="view-tasks" data-module="tasks"></section>
+    <section class="view" id="view-shopping" data-module="shopping" hidden></section>
+    <section class="view" id="view-settings" data-module="settings" hidden></section>
+  </main>
+
+  <nav class="tabbar" id="tabbar" role="tablist"></nav>
+
+</div>
+
+<!-- Modal host: sheets, confirms and the editors all render in here. -->
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- On-screen keyboard. A kiosk Pi has no touch keyboard of its own. -->
+<div class="kb" id="keyboard" hidden aria-hidden="true"></div>
+
+<div class="toast" id="toast" hidden></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/keyboard.js"></script>
+<script src="js/emoji.js"></script>
+<script src="js/modules/tasks.js"></script>
+<script src="js/modules/shopping.js"></script>
+<script src="js/modules/settings.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

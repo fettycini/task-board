@@ -1,0 +1,16 @@
+# Your board — names, tasks and shopping list. Never commit this.
+data/board.json
+data/*.tmp
+data/*.corrupt-*
+
+node_modules/
+*.log
+.env
+.env.*
+
+# Scratch files used while developing against a headless browser
+web/_preview.html
+web/_probe.html
+
+.DS_Store
+Thumbs.db

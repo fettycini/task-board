@@ -1,0 +1,9 @@
+# Everything in this repo is deployed to a Linux box (the Pi), so keep LF
+# endings everywhere — including in a Windows working copy. Without this,
+# core.autocrlf rewrites scripts/*.sh to CRLF on checkout and the shebang
+# fails on the Pi with "bad interpreter: /usr/bin/env bash^M".
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.gz binary

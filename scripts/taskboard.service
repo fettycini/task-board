@@ -1,0 +1,19 @@
+[Unit]
+Description=Task Board server
+After=network.target
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=__APPDIR__
+ExecStart=/usr/bin/node __APPDIR__/server/index.js
+Environment=TASKBOARD_PORT=8080
+Environment=TASKBOARD_HOST=127.0.0.1
+Restart=always
+RestartSec=3
+# Give the store a moment to finish its final write on shutdown.
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

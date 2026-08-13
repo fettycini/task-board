@@ -1,0 +1,699 @@
+/* ------------------------------------------------------------- icon button */
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-soft);
+  border-radius: 50%;
+  transition: background-color 120ms ease, transform 90ms ease;
+}
+.icon-btn:active { background: var(--bg-tint); transform: scale(0.9); }
+.icon-btn.small { width: 34px; height: 34px; font-size: 17px; }
+
+/* --------------------------------------------------------- progress dial */
+
+.progress {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.progress svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+.progress circle {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.progress-track { stroke: var(--line); }
+.progress-fill {
+  stroke: var(--done);
+  stroke-dasharray: 97.4;          /* 2πr, r = 15.5 */
+  stroke-dashoffset: 97.4;
+  transition: stroke-dashoffset 420ms cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.progress span {
+  position: relative;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.progress.complete .progress-fill { stroke: var(--accent); }
+.progress.complete span { color: var(--accent); }
+
+/* -------------------------------------------------------------- task card */
+
+.task {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 5px 8px 5px 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.task .check {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.task .task-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task .task-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.task .task-meta {
+  display: block;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task .task-icon { font-size: 14px; flex: none; }
+
+.task.is-today {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+.task.is-overdue .task-meta { color: var(--warn); font-weight: 700; }
+
+.task.done {
+  background: var(--done-soft);
+  border-color: color-mix(in srgb, var(--done) 35%, var(--line));
+}
+.task.done .check {
+  background: var(--done);
+  border-color: var(--done);
+  color: #fff;
+}
+.task.done .task-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  color: var(--ink-faint);
+}
+
+/* A quick pop when something gets ticked off. */
+@keyframes pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.task.just-done { animation: pop 320ms cubic-bezier(0.34, 1.5, 0.5, 1); }
+
+/* --------------------------------------------------------- shopping items */
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  text-align: left;
+}
+.shop-item .check {
+  flex: none;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  display: grid; place-items: center;
+  font-size: 15px;
+  color: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.shop-item .shop-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.shop-item .qty {
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 99px;
+  padding: 2px 8px;
+}
+.shop-item.checked { opacity: 0.55; }
+.shop-item.checked .check {
+  background: var(--done);
+  border-color: var(--done);
+  color: #fff;
+}
+.shop-item.checked .shop-title {
+  text-decoration: line-through;
+  color: var(--ink-faint);
+}
+
+/* Two columns of items — 800px is wide enough that one column wastes space. */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  align-content: start;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 10px 6px;
+}
+.chip {
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 99px;
+  background: var(--bg-tint);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.chip.selected {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+/* ------------------------------------------------------------ empty state */
+
+.empty {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 14px;
+  text-align: center;
+  color: var(--ink-faint);
+}
+.empty .emoji { font-size: 30px; }
+.empty p { font-size: 12.5px; max-width: 22ch; }
+
+/* ----------------------------------------------------------------- button */
+
+.btn {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--bg-tint);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-soft); }
+.btn.good { background: var(--done); color: #fff; }
+.btn.danger { background: color-mix(in srgb, var(--warn) 22%, var(--surface)); color: var(--warn); }
+.btn.ghost { background: transparent; border: 1.5px solid var(--line-strong); color: var(--ink-soft); }
+.btn.block { width: 100%; }
+.btn:disabled { opacity: 0.45; }
+
+/* ------------------------------------------------------------ modal sheet */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(40, 25, 40, 0.45);
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: end center;
+  z-index: 40;
+  animation: fade 150ms ease;
+}
+.scrim[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } }
+
+.sheet {
+  width: 100%;
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-lift);
+  padding: 12px 14px 14px;
+  gap: 10px;
+  animation: rise 200ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+@keyframes rise { from { transform: translateY(26px); opacity: 0.4; } }
+
+.sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sheet-head h2 { flex: 1; font-size: 16px; font-weight: 700; }
+
+.sheet-body {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* Sheets are taller than 480px once the icon picker is in them, so the body
+   scrolls — but the primary action must never be the thing you have to scroll
+   to find. It sticks to the bottom of the sheet instead. */
+.sheet-actions {
+  display: flex;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: auto;
+  padding: 9px 0 2px;
+  background: var(--surface);
+  box-shadow: 0 -10px 14px -8px var(--surface), 0 -1px 0 var(--line);
+}
+.sheet-actions .btn { flex: 1; }
+
+/* ------------------------------------------------------------------ field */
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field > label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ink-faint);
+}
+
+/* A fake input: taps open the on-screen keyboard rather than the browser's. */
+.text-input {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  padding: 0 13px;
+  font-size: 15px;
+  background: var(--bg-tint);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  color: var(--ink);
+  width: 100%;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.text-input.empty-value { color: var(--ink-faint); }
+.text-input.focused {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.seg {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.seg-item {
+  flex: 1;
+  min-width: 62px;
+  min-height: 42px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tint);
+  border: 1.5px solid transparent;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.seg-item[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--person, var(--accent)) 20%, var(--surface));
+  border-color: var(--person, var(--accent));
+  color: var(--ink);
+}
+
+/* Day-of-week picker: seven fixed circles. */
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.day-btn {
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tint);
+  border: 1.5px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.day-btn[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* --------------------------------------------------------- settings rows */
+
+.rows { display: flex; flex-direction: column; gap: 7px; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.row .row-main { flex: 1; min-width: 0; }
+.row .row-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row .row-sub {
+  font-size: 11px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row.paused { opacity: 0.5; }
+
+.section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 6px 2px 0;
+}
+
+.swatches { display: flex; gap: 7px; flex-wrap: wrap; }
+.swatch {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: var(--person, var(--accent));
+}
+.swatch[aria-pressed="true"] { border-color: var(--ink); }
+
+.theme-card {
+  flex: 1;
+  min-width: 74px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  border: 2.5px solid transparent;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.theme-card[aria-pressed="true"] { border-color: var(--ink); }
+
+/* ------------------------------------------------------------ emoji picker */
+
+.emoji-tabs {
+  display: flex;
+  gap: 5px;
+  flex: none;
+}
+.emoji-tab {
+  flex: 1;
+  height: 40px;
+  font-size: 19px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tint);
+  border: 1.5px solid transparent;
+}
+.emoji-tab[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 4px;
+  max-height: 210px;
+  align-content: start;
+  padding-right: 2px;
+}
+.emoji-cell {
+  aspect-ratio: 1;
+  min-height: 40px;
+  font-size: 21px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+}
+
+/* ---------------------------------------------------- editable list chips */
+
+/* A chip that carries its own delete affordance, for the palettes and the
+   quick-add list where every entry must be removable. */
+.edit-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px 5px 11px;
+  min-height: 38px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 99px;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.edit-chip.icon-only {
+  padding: 5px;
+  min-width: 44px;
+  justify-content: center;
+  font-size: 19px;
+}
+.edit-chip .remove {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 13px;
+  line-height: 1;
+  background: var(--surface);
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+}
+.edit-chip .remove:active { background: var(--warn); color: #fff; }
+
+.chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-content: start;
+}
+
+/* Up/down reorder controls on settings rows. */
+.row-move {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: none;
+}
+.row-move button {
+  width: 30px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 6px;
+  background: var(--bg-tint);
+  color: var(--ink-soft);
+}
+.row-move button:disabled { opacity: 0.3; }
+
+/* ------------------------------------------------------------------ toast */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 68px;
+  transform: translateX(-50%);
+  z-index: 60;
+  padding: 9px 16px;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--shadow-lift);
+  animation: toast-in 200ms cubic-bezier(0.2, 1.2, 0.4, 1);
+  pointer-events: none;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast[hidden] { display: none; }
+@keyframes toast-in { from { transform: translate(-50%, 12px); opacity: 0; } }
+
+/* --------------------------------------------------------------- confetti */
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 70;
+  overflow: hidden;
+}
+.confetti i {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: fall 1500ms ease-in forwards;
+}
+@keyframes fall {
+  0%   { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(520px) rotate(540deg); }
+}
+
+/* -------------------------------------------------------- on-screen keyboard */
+
+.kb {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 50;
+  background: var(--kb-bg);
+  border-top: 1px solid var(--line-strong);
+  box-shadow: 0 -6px 20px rgba(70, 45, 65, 0.16);
+  padding: 5px 5px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: kb-in 160ms ease-out;
+}
+.kb[hidden] { display: none; }
+@keyframes kb-in { from { transform: translateY(100%); } }
+
+/* Typing is a full takeover. The keyboard has its own preview line, so the
+   sheet underneath is hidden outright rather than left ghosting behind the
+   keys — and stray taps can't reach its buttons. It reappears on Done/Cancel. */
+body.kb-open .scrim { visibility: hidden; pointer-events: none; }
+
+.kb-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 10px;
+  margin-bottom: 1px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--accent);
+}
+.kb-preview .kb-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;              /* keep the tail (caret end) visible */
+  text-align: left;
+}
+.kb-preview .kb-text > span { direction: ltr; unicode-bidi: bidi-override; }
+.kb-preview .kb-text.placeholder { color: var(--ink-faint); font-weight: 500; }
+.kb-caret {
+  width: 2px;
+  height: 19px;
+  background: var(--accent);
+  animation: blink 1s steps(2, start) infinite;
+  flex: none;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.kb-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.key {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 1.5px 0 var(--line-strong);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  transition: transform 60ms ease, background-color 60ms ease;
+}
+.key:active {
+  transform: translateY(1.5px);
+  box-shadow: none;
+  background: var(--accent-soft);
+}
+.key.wide  { flex: 1.5; font-size: 13px; font-weight: 700; }
+.key.space { flex: 5; }
+.key.accent { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+.key.muted  { background: var(--bg-tint); font-size: 13px; font-weight: 700; }
+.key[aria-pressed="true"] { background: var(--accent-soft); }
